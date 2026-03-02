@@ -1,66 +1,65 @@
 /**
- * =============================================================
- * MAIN CLASS - UseCase4PalindromeCheckerApp
- * =============================================================
+ * ===============================================================
+ * MAIN CLASS - UseCase5PalindromeCheckerApp
+ * ===============================================================
  *
- * Use Case 4: Character Array Based Validation
+ * Use Case 5: Stack Based Palindrome Checker
  *
  * Description:
- * This class validates a palindrome by converting
- * the string into a character array and comparing
- * characters using the two-pointer technique.
+ * This class validates a palindrome using a Stack
+ * data structure which follows the LIFO principle.
  *
  * At this stage, the application:
- * - Converts string to char array
- * - Uses start and end pointers
- * - Compares characters efficiently
- * - Displays the result
+ *  - Pushes characters onto a stack
+ *  - Pops them in reverse order
+ *  - Compares with original sequence
+ *  - Displays the result
  *
- * This reduces extra memory usage.
+ * This maps stack behavior to reversal logic.
  *
  * @author Developer
- * @version 4.0
+ * @version 5.0
  */
 
-public class PalindromeCheckerApp{
+import java.util.Scanner;
+import java.util.Stack;
+
+public class UseCase5PalindromeCheckerApp {
 
     /**
-     * Application entry point for UC4.
+     * Application entry point for UCS.
+     *
      * @param args Command-line arguments
      */
     public static void main(String[] args) {
 
-        // Hardcoded string
-        String text = "radar";
+        Scanner scanner = new Scanner(System.in);
+        Stack<Character> stack = new Stack<>();
 
-        System.out.println("Input String: " + text);
+        System.out.print("Enter a word to check if it's a palindrome: ");
+        String input = scanner.nextLine();
 
-        // Convert to lowercase (optional safety step)
-        text = text.toLowerCase();
+        // Normalize input (remove spaces and convert to lowercase)
+        String normalized = input.replaceAll("\\s+", "").toLowerCase();
 
-        // Convert string to character array
-        char[] characters = text.toCharArray();
-
-        // Initialize pointers
-        int start = 0;
-        int end = characters.length - 1;
-        boolean isPalindrome = true;
-
-        // Two-pointer comparison
-        while (start < end) {
-            if (characters[start] != characters[end]) {
-                isPalindrome = false;
-                break;
-            }
-            start++;
-            end--;
+        // Push all characters onto the stack
+        for (char ch : normalized.toCharArray()) {
+            stack.push(ch);
         }
 
-        // Display result
-        if (isPalindrome) {
-            System.out.println("Result: The string is a palindrome.");
+        // Build reversed string by popping from stack
+        StringBuilder reversed = new StringBuilder();
+        while (!stack.isEmpty()) {
+            reversed.append(stack.pop());
+        }
+
+        // Check if palindrome
+        if (normalized.equals(reversed.toString())) {
+            System.out.println("Result: \"" + input + "\" is a palindrome.");
         } else {
-            System.out.println("Result: The string is NOT a palindrome.");
+            System.out.println("Result: \"" + input + "\" is NOT a palindrome.");
         }
+
+        scanner.close();
     }
 }
