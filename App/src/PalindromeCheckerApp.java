@@ -1,75 +1,68 @@
+import java.util.LinkedList;
+import java.util.Scanner;
+
 /**
- * ===============================================================
- * MAIN CLASS - UseCase7PalindromeCheckerApp
- * ===============================================================
+ * =========================================================
+ * MAIN CLASS - UseCase8PalindromeCheckerApp
+ * =========================================================
  *
- * Use Case 7: Deque Based Optimized Palindrome Checker
+ * Use Case 8: Linked List Based Palindrome Checker
  *
  * Description:
- * This class validates a palindrome using a Deque
- * (Double Ended Queue).
+ * This class checks whether a string is a palindrome
+ * using a LinkedList.
  *
- * Characters are inserted into the deque and then
- * compared by removing elements from both ends:
- *
+ * Characters are added to the list and then compared
+ * by removing elements from both ends:
  *  - removeFirst()
  *  - removeLast()
  *
- * This avoids reversing the string and provides an
- * efficient front-to-back comparison approach.
- *
- * This use case demonstrates optimal bidirectional
- * traversal using Deque.
+ * This demonstrates how LinkedList supports
+ * double-ended operations for symmetric validation.
  *
  * @author Developer
- * @version 7.0
+ * @version 8.0
  */
-
-import java.util.ArrayDeque;
-import java.util.Deque;
-import java.util.Scanner;
-
 public class PalindromeCheckerApp {
 
     /**
-     * Application entry point for UC7.
-     *
+     * Application entry point for UC8.
      * @param args Command-line arguments
      */
     public static void main(String[] args) {
 
         Scanner scanner = new Scanner(System.in);
-        Deque<Character> deque = new ArrayDeque<>();
 
-        System.out.print("Enter a word to check if it's a palindrome: ");
+        System.out.print("Enter a string to check: ");
         String input = scanner.nextLine();
 
-        // Normalize input (remove spaces and convert to lowercase)
-        String normalized = input.replaceAll("\\s+", "").toLowerCase();
+        // Normalize input (remove spaces and ignore case)
+        input = input.replaceAll("\\s+", "").toLowerCase();
 
-        // Insert characters into deque
-        for (char ch : normalized.toCharArray()) {
-            deque.addLast(ch);
+        LinkedList<Character> list = new LinkedList<>();
+
+        // Add characters to LinkedList
+        for (char ch : input.toCharArray()) {
+            list.add(ch);
         }
 
         boolean isPalindrome = true;
 
-        // Compare from both ends
-        while (deque.size() > 1) {
-            char front = deque.removeFirst();
-            char rear = deque.removeLast();
+        // Compare characters from both ends
+        while (list.size() > 1) {
+            char first = list.removeFirst();
+            char last = list.removeLast();
 
-            if (front != rear) {
+            if (first != last) {
                 isPalindrome = false;
                 break;
             }
         }
 
-        // Display result
         if (isPalindrome) {
-            System.out.println("Result: \"" + input + "\" is a palindrome.");
+            System.out.println("The string IS a palindrome.");
         } else {
-            System.out.println("Result: \"" + input + "\" is NOT a palindrome.");
+            System.out.println("The string is NOT a palindrome.");
         }
 
         scanner.close();
