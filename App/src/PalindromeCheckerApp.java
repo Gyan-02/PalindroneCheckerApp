@@ -1,39 +1,47 @@
 /**
  * ===============================================================
- * MAIN CLASS - UseCase5PalindromeCheckerApp
+ * MAIN CLASS - UseCase6PalindromeCheckerApp
  * ===============================================================
  *
- * Use Case 5: Stack Based Palindrome Checker
+ * Use Case 6: Queue + Stack Fairness Check
  *
  * Description:
- * This class validates a palindrome using a Stack
- * data structure which follows the LIFO principle.
+ * This class demonstrates palindrome validation using
+ * two different data structures:
  *
- * At this stage, the application:
- *  - Pushes characters onto a stack
- *  - Pops them in reverse order
- *  - Compares with original sequence
- *  - Displays the result
+ *  - Queue (FIFO - First In First Out)
+ *  - Stack (LIFO - Last In First Out)
  *
- * This maps stack behavior to reversal logic.
+ * Characters are inserted into both structures and then
+ * compared by removing from the front of the queue and
+ * the top of the stack.
+ *
+ * If all characters match, the input string is confirmed
+ * as a palindrome.
+ *
+ * This use case helps understand how FIFO and LIFO
+ * behaviors can be combined for symmetric comparison.
  *
  * @author Developer
- * @version 5.0
+ * @version 6.0
  */
 
+import java.util.LinkedList;
+import java.util.Queue;
 import java.util.Scanner;
 import java.util.Stack;
 
-public class UseCase5PalindromeCheckerApp {
+public class PalindromeCheckerApp {
 
     /**
-     * Application entry point for UCS.
+     * Application entry point for UC6.
      *
      * @param args Command-line arguments
      */
     public static void main(String[] args) {
 
         Scanner scanner = new Scanner(System.in);
+        Queue<Character> queue = new LinkedList<>();
         Stack<Character> stack = new Stack<>();
 
         System.out.print("Enter a word to check if it's a palindrome: ");
@@ -42,19 +50,24 @@ public class UseCase5PalindromeCheckerApp {
         // Normalize input (remove spaces and convert to lowercase)
         String normalized = input.replaceAll("\\s+", "").toLowerCase();
 
-        // Push all characters onto the stack
+        // Insert characters into both queue and stack
         for (char ch : normalized.toCharArray()) {
-            stack.push(ch);
+            queue.add(ch);     // FIFO
+            stack.push(ch);    // LIFO
         }
 
-        // Build reversed string by popping from stack
-        StringBuilder reversed = new StringBuilder();
-        while (!stack.isEmpty()) {
-            reversed.append(stack.pop());
+        boolean isPalindrome = true;
+
+        // Compare elements from queue and stack
+        while (!queue.isEmpty()) {
+            if (!queue.remove().equals(stack.pop())) {
+                isPalindrome = false;
+                break;
+            }
         }
 
-        // Check if palindrome
-        if (normalized.equals(reversed.toString())) {
+        // Display result
+        if (isPalindrome) {
             System.out.println("Result: \"" + input + "\" is a palindrome.");
         } else {
             System.out.println("Result: \"" + input + "\" is NOT a palindrome.");
